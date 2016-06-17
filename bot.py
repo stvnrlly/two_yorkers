@@ -17,8 +17,10 @@ api = tweepy.API(auth)
 
 while True:
     # Grab one random cartoon and keep the image URL, then another and keep the caption
-    image_src = requests.get("https://www.newyorker.com/cartoons/random/randomAPI1").json()[0]["src"]
-    caption = requests.get("https://www.newyorker.com/cartoons/random/randomAPI1").json()[0]["caption"]
+    # Luckily, the random cartoon API returns two cartoons
+    r = requests.get("https://www.newyorker.com/cartoons/random/randomAPI").json()
+    image_src = r[0]["src"]
+    caption = r[1]["caption"]
 
     # Unescape the HTML to convert curly quotes and such
     caption = html.unescape(caption)
