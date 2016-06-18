@@ -19,6 +19,10 @@ while True:
     # Grab one random cartoon and keep the image URL, then another and keep the caption
     # Luckily, the random cartoon API returns two cartoons
     r = requests.get("https://www.newyorker.com/cartoons/random/randomAPI").json()
+
+    # A caption of length zero sometimes means that there's text in the cartoon itself
+    if len(r[0]["caption"]) == 0:
+        continue
     image_src = r[0]["src"]
     caption = r[1]["caption"]
 
