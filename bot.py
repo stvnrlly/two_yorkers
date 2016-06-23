@@ -29,6 +29,16 @@ while True:
     # Unescape the HTML to convert curly quotes and such
     caption = html.unescape(caption)
 
+    # Do a hacky thing to convert mis-encoded chunks to utf-8
+    for i in range(len(caption)):
+        try:
+            chunk = caption[i] + caption[i+1]
+            new = chunk.encode('windows-1252').decode('utf-8')
+            if len(chunk) > len(new):
+                caption = caption.replace(chunk, new)
+        except:
+            pass
+
     # Only tweet if a caption actually exists
     if 140 > len(caption) > 1 : # use 1 instead of 0 since there's the occasional single quote caption
         filename = "temp.jpg"
